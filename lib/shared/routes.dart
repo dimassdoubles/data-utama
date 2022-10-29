@@ -25,7 +25,7 @@ Route<dynamic> controller(RouteSettings settings) {
       );
     case splashPage:
       return MaterialPageRoute(
-        builder: (context) => const SplashPage(),
+        builder: (context) => SplashPage(),
       );
     default:
       throw ("This route name doesn't exist");

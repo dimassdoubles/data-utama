@@ -1,24 +1,41 @@
+import 'dart:async';
+
+import 'package:data_utama/injetion_container.dart';
+import 'package:data_utama/presentation/blocs/auth/authentication_bloc.dart';
+import 'package:data_utama/presentation/blocs/auth/authentication_event.dart';
+import 'package:data_utama/presentation/blocs/auth/authentication_state.dart';
 import 'package:data_utama/shared/routes.dart';
 import 'package:data_utama/shared/styles/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class SplashPage extends StatelessWidget {
-  const SplashPage({super.key});
+  SplashPage({super.key});
+
+  final _authBloc = getIt<AuthenticationBloc>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          const Background(),
-          GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, loginPage);
-              },
-              child: const Logo()),
-          const Loading(),
-        ],
+    _authBloc.add(AppStart());
+    return BlocListener(
+      bloc: _authBloc,
+      listener: (context, state) {
+        if (state is Unauthenticated) {
+          Timer(
+            const Duration(milliseconds: 3000),
+            () => Navigator.pushReplacementNamed(context, loginPage),
+          );
+        }
+      },
+      child: Scaffold(
+        body: Stack(
+          children: const [
+            Background(),
+            Logo(),
+            Loading(),
+          ],
+        ),
       ),
     );
   }
@@ -39,6 +56,7 @@ class Loading extends StatelessWidget {
           'Loading ...',
           style: textStyle2.copyWith(
             color: Colors.white,
+            fontSize: 20,
           ),
         ),
       ),
