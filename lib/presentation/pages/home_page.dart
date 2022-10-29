@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../shared/styles/text_styles.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -17,6 +19,31 @@ class HomePage extends StatelessWidget {
 
 class Header extends StatelessWidget {
   const Header({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const CurveLogo(),
+        const SizedBox(
+          height: 16,
+        ),
+        Text(
+          'Data Utama',
+          style: textStyle1.copyWith(
+            fontWeight: bold,
+            fontSize: 24,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CurveLogo extends StatelessWidget {
+  const CurveLogo({
     Key? key,
   }) : super(key: key);
 
