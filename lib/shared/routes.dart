@@ -13,7 +13,7 @@ Route<dynamic> controller(RouteSettings settings) {
   switch (settings.name) {
     case homePage:
       return MaterialPageRoute(
-        builder: (context) => const HomePage(),
+        builder: (context) => HomePage(),
       );
     case registerPage:
       return MaterialPageRoute(
