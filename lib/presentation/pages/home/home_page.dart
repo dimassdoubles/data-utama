@@ -1,64 +1,64 @@
-import 'package:data_utama/shared/styles/colors.dart';
+import 'package:data_utama/injetion_container.dart';
+import 'package:data_utama/presentation/cubits/page_cubit.dart';
+import 'package:data_utama/presentation/pages/home/screens/attendence_screen.dart';
+import 'package:data_utama/presentation/pages/home/screens/home_screen.dart';
+import 'package:data_utama/presentation/pages/home/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../shared/styles/text_styles.dart';
+import '../../widgets/curve_logo.dart';
+import '../../widgets/custom_bottom_navigation_bar.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final _pageCubit = getIt<PageCubit>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            Header(),
+          children: [
+            const Header(),
+            const SizedBox(
+              height: 32,
+            ),
+            Body(pageCubit: _pageCubit),
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavBar(),
+      bottomNavigationBar: CustomBottomNavBar(),
     );
   }
 }
 
-class CustomBottomNavBar extends StatelessWidget {
-  const CustomBottomNavBar({
+class Body extends StatelessWidget {
+  const Body({
     Key? key,
-  }) : super(key: key);
+    required PageCubit pageCubit,
+  })  : _pageCubit = pageCubit,
+        super(key: key);
+
+  final PageCubit _pageCubit;
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      selectedItemColor: lightBlue,
-      items: [
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            'assets/bottom_navbar_icons/home-icon.png',
-          ),
-          activeIcon: Image.asset(
-            'assets/bottom_navbar_icons/active-home-icon.png',
-          ),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            'assets/bottom_navbar_icons/attendence-icon.png',
-          ),
-          activeIcon: Image.asset(
-            'assets/bottom_navbar_icons/active-attendence-icon.png',
-          ),
-          label: 'Attendence',
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            'assets/bottom_navbar_icons/profile-icon.png',
-          ),
-          activeIcon: Image.asset(
-            'assets/bottom_navbar_icons/active-profile-icon.png',
-          ),
-          label: 'Attendence',
-        ),
-      ],
+    return BlocBuilder(
+      bloc: _pageCubit,
+      builder: (context, state) {
+        switch (state) {
+          case 0:
+            return const HomeScreen();
+          case 1:
+            return const AttendenceScreen();
+          case 2:
+            return const ProfileScreen();
+          default:
+            return const HomeScreen();
+        }
+      },
     );
   }
 }
@@ -81,38 +81,6 @@ class Header extends StatelessWidget {
           style: textStyle1.copyWith(
             fontWeight: bold,
             fontSize: 32,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class CurveLogo extends StatelessWidget {
-  const CurveLogo({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          padding: EdgeInsets.only(
-              bottom: (MediaQuery.of(context).size.width / 5) / 2),
-          width: double.infinity,
-          child: Image.asset(
-            'assets/curve.png',
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          left: (MediaQuery.of(context).size.width / 2) -
-              (MediaQuery.of(context).size.width / 5 / 2),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width / 5,
-            child: Image.asset('assets/logo.png'),
           ),
         ),
       ],
