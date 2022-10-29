@@ -1,3 +1,4 @@
+import 'package:data_utama/shared/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/inputs/input_email.dart';
@@ -102,10 +103,17 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 }
 
-class InputGender extends StatelessWidget {
+class InputGender extends StatefulWidget {
   const InputGender({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<InputGender> createState() => _InputGenderState();
+}
+
+class _InputGenderState extends State<InputGender> {
+  String? gender;
 
   @override
   Widget build(BuildContext context) {
@@ -115,22 +123,40 @@ class InputGender extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Radio(
+            Radio<String>(
               value: "l",
-              groupValue: "gender",
-              onChanged: (value) {},
+              groupValue: gender,
+              onChanged: (value) {
+                setState(() {
+                  gender = value;
+                });
+              },
             ),
-            const Text('PRIA'),
+            Text(
+              'PRIA',
+              style: TextStyle(
+                fontWeight: bold,
+              ),
+            ),
           ],
         ),
         Row(
           children: [
-            Radio(
+            Radio<String>(
               value: "p",
-              groupValue: "gender",
-              onChanged: (value) {},
+              groupValue: gender,
+              onChanged: (value) {
+                setState(() {
+                  gender = value;
+                });
+              },
             ),
-            const Text('WANITA')
+            Text(
+              'WANITA',
+              style: TextStyle(
+                fontWeight: bold,
+              ),
+            )
           ],
         ),
       ],
