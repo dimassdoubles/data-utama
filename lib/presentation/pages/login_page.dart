@@ -1,33 +1,86 @@
+import 'package:data_utama/injetion_container.dart';
+import 'package:data_utama/presentation/blocs/auth/authentication_bloc.dart';
+import 'package:data_utama/presentation/blocs/auth/authentication_state.dart';
 import 'package:data_utama/shared/routes.dart';
 import 'package:data_utama/shared/styles/colors.dart';
 import 'package:data_utama/shared/styles/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginPage extends StatelessWidget {
+import '../widgets/buttons/forgot_pass_button.dart';
+import '../widgets/buttons/login_button.dart';
+import '../widgets/inputs/input_password.dart';
+import '../widgets/inputs/input_username.dart';
+
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  final AuthenticationBloc _authBloc = getIt<AuthenticationBloc>();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            children: const [
-              Header(),
-              SizedBox(
-                height: 64,
+      body: BlocListener(
+        bloc: _authBloc,
+        listener: (context, state) {
+          if (state is Authenticated) {
+            Navigator.pushReplacementNamed(context, homePage);
+          }
+          if (state is LoginFail) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: red,
+                duration: const Duration(milliseconds: 3000),
+                content: Text(
+                  state.message,
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
-              InputSection(),
-              SizedBox(
-                height: 64,
-              ),
-              LoginButton(),
-              SizedBox(
-                height: 32,
-              ),
-              RegisterButton(),
-            ],
+            );
+          }
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Column(
+              children: [
+                const Header(),
+                const SizedBox(
+                  height: 64,
+                ),
+                InputSection(
+                  usernameController: _usernameController,
+                  passwordController: _passwordController,
+                ),
+                const SizedBox(
+                  height: 64,
+                ),
+                LoginButton(
+                  usernameController: _usernameController,
+                  passwordController: _passwordController,
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                const MoveToRegisterPage(),
+              ],
+            ),
           ),
         ),
       ),
@@ -36,27 +89,34 @@ class LoginPage extends StatelessWidget {
 }
 
 class InputSection extends StatelessWidget {
+  final TextEditingController _usernameController;
+  final TextEditingController _passwordController;
+
   const InputSection({
     Key? key,
-  }) : super(key: key);
+    required TextEditingController usernameController,
+    required TextEditingController passwordController,
+  })  : _usernameController = usernameController,
+        _passwordController = passwordController,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        InputUsername(),
-        SizedBox(
+      children: [
+        InputUsername(controller: _usernameController),
+        const SizedBox(
           height: 32,
         ),
-        InputPassword(),
-        ForgotPassButton(),
+        InputPassword(controller: _passwordController),
+        const ForgotPassButton(),
       ],
     );
   }
 }
 
-class RegisterButton extends StatelessWidget {
-  const RegisterButton({
+class MoveToRegisterPage extends StatelessWidget {
+  const MoveToRegisterPage({
     Key? key,
   }) : super(key: key);
 
@@ -79,147 +139,6 @@ class RegisterButton extends StatelessWidget {
         ),
         const SizedBox(
           height: 16,
-        ),
-      ],
-    );
-  }
-}
-
-class LoginButton extends StatelessWidget {
-  const LoginButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.pushNamed(context, homePage);
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: darkBlue,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            10,
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        child: Center(
-          child: Text(
-            'MASUK',
-            style: TextStyle(
-              fontWeight: bold,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ForgotPassButton extends StatelessWidget {
-  const ForgotPassButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: AlignmentDirectional.centerEnd,
-      child: TextButton(
-        onPressed: () {},
-        child: Text(
-          'Lupa Password?',
-          style: TextStyle(
-            color: red,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class InputPassword extends StatelessWidget {
-  const InputPassword({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.lock),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              'Password',
-              style: TextStyle(
-                fontWeight: semiBold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        const TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            isCollapsed: true,
-            contentPadding: EdgeInsets.all(12),
-            suffixIcon: Icon(
-              Icons.remove_red_eye,
-              color: Colors.black,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class InputUsername extends StatelessWidget {
-  const InputUsername({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.account_circle_rounded),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              'Username/Email/Phone',
-              style: TextStyle(
-                fontWeight: semiBold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        const TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            isCollapsed: true,
-            contentPadding: EdgeInsets.all(12),
-          ),
         ),
       ],
     );

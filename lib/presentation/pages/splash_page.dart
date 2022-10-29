@@ -16,7 +16,7 @@ class SplashPage extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, loginPage);
               },
-              child: Logo()),
+              child: const Logo()),
           const Loading(),
         ],
       ),
