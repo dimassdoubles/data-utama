@@ -1,5 +1,6 @@
 // ignore_for_file: unused_field
 
+import 'package:data_utama/shared/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/styles/colors.dart';
@@ -35,6 +36,7 @@ class RegisterButton extends StatelessWidget {
         // print(_phoneController.text);
         // print(_passController.text);
         // print(_passConfirmController.text);
+        Navigator.pushReplacementNamed(context, homePage);
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: darkBlue,
