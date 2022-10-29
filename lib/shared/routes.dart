@@ -1,4 +1,4 @@
-import 'package:data_utama/presentation/pages/home_page.dart';
+import 'package:data_utama/presentation/pages/home/home_page.dart';
 import 'package:data_utama/presentation/pages/login_page.dart';
 import 'package:data_utama/presentation/pages/register_page.dart';
 import 'package:data_utama/presentation/pages/splash_page.dart';
