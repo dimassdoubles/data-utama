@@ -1,3 +1,4 @@
+import 'package:data_utama/shared/routes.dart';
 import 'package:data_utama/shared/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_indicators/progress_indicators.dart';
@@ -9,10 +10,14 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: const [
-          Background(),
-          Logo(),
-          Loading(),
+        children: [
+          const Background(),
+          GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, loginPage);
+              },
+              child: Logo()),
+          const Loading(),
         ],
       ),
     );
