@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'shared/routes.dart' as route;
+import 'injetion_container.dart' as injection;
 
-void main() {
+void main() async {
+  await injection.setup();
   runApp(const MyApp());
 }
 
