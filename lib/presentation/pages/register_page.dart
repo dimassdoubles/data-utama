@@ -1,11 +1,36 @@
-import 'package:data_utama/shared/routes.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/styles/colors.dart';
-import '../../shared/styles/text_styles.dart';
+import '../widgets/inputs/input_email.dart';
+import '../widgets/inputs/input_name.dart';
+import '../widgets/inputs/input_pass_confirmation.dart';
+import '../widgets/inputs/input_password.dart';
+import '../widgets/inputs/input_telp.dart';
+import '../widgets/buttons/register_button.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _telpController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  final TextEditingController _passConfirmController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _telpController.dispose();
+    _passController.dispose();
+    _passConfirmController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,36 +59,42 @@ class RegisterPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
-            children: const [
-              SizedBox(
+            children: [
+              const SizedBox(
                 height: 32,
               ),
-              InputGender(),
-              SizedBox(
+              const InputGender(),
+              const SizedBox(
                 height: 16,
               ),
-              InputName(),
-              SizedBox(
+              InputName(controller: _nameController),
+              const SizedBox(
                 height: 16,
               ),
-              InputEmail(),
-              SizedBox(
+              InputEmail(controller: _emailController),
+              const SizedBox(
                 height: 16,
               ),
-              InputTelp(),
-              SizedBox(
+              InputTelp(controller: _telpController),
+              const SizedBox(
                 height: 16,
               ),
-              InputPassword(),
-              SizedBox(
+              InputPassword(controller: _passController),
+              const SizedBox(
                 height: 16,
               ),
-              InputPassConfirmation(),
-              SizedBox(
+              InputPassConfirmation(controller: _passConfirmController),
+              const SizedBox(
                 height: 32,
               ),
-              RegisterButton(),
-              SizedBox(
+              RegisterButton(
+                nameController: _nameController,
+                emailController: _emailController,
+                telpController: _telpController,
+                passController: _passController,
+                passConfirmController: _passConfirmController,
+              ),
+              const SizedBox(
                 height: 32,
               ),
             ],
@@ -73,43 +104,6 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
-
-class RegisterButton extends StatelessWidget {
-  const RegisterButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.pushNamed(context, homePage);
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: darkBlue,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            10,
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 16),
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        child: Center(
-          child: Text(
-            'DAFTAR',
-            style: TextStyle(
-              fontWeight: bold,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class InputGender extends StatelessWidget {
   const InputGender({
     Key? key,
@@ -140,211 +134,6 @@ class InputGender extends StatelessWidget {
             ),
             const Text('WANITA')
           ],
-        ),
-      ],
-    );
-  }
-}
-
-class InputName extends StatelessWidget {
-  const InputName({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.account_circle_rounded),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              'Nama Lengkap',
-              style: TextStyle(
-                fontWeight: semiBold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        const TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            isCollapsed: true,
-            contentPadding: EdgeInsets.all(12),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class InputEmail extends StatelessWidget {
-  const InputEmail({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.mail),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              'Email Aktif',
-              style: TextStyle(
-                fontWeight: semiBold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        const TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            isCollapsed: true,
-            contentPadding: EdgeInsets.all(12),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class InputTelp extends StatelessWidget {
-  const InputTelp({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.phone),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              'No HP/WA',
-              style: TextStyle(
-                fontWeight: semiBold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        const TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            isCollapsed: true,
-            contentPadding: EdgeInsets.all(12),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class InputPassword extends StatelessWidget {
-  const InputPassword({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.lock),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              'Password',
-              style: TextStyle(
-                fontWeight: semiBold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        const TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            isCollapsed: true,
-            contentPadding: EdgeInsets.all(12),
-            suffixIcon: Icon(
-              Icons.remove_red_eye,
-              color: Colors.black,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class InputPassConfirmation extends StatelessWidget {
-  const InputPassConfirmation({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            const Icon(Icons.lock),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              'Ulangi Password',
-              style: TextStyle(
-                fontWeight: semiBold,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        const TextField(
-          obscureText: true,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
-            isCollapsed: true,
-            contentPadding: EdgeInsets.all(12),
-            suffixIcon: Icon(
-              Icons.remove_red_eye,
-              color: Colors.black,
-            ),
-          ),
         ),
       ],
     );
