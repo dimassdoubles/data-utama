@@ -1,3 +1,4 @@
+import 'package:data_utama/shared/routes.dart';
 import 'package:data_utama/shared/styles/colors.dart';
 import 'package:data_utama/shared/styles/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,9 @@ class RegisterButton extends StatelessWidget {
       children: [
         const Text('Anda Anggota Baru?'),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, registerPage);
+          },
           child: Text(
             'DAFTAR DI SINI',
             style: TextStyle(
