@@ -36,7 +36,7 @@ class InputPassConfirmation extends StatelessWidget {
         TextFormField(
           controller: _controller,
           obscureText: true,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             isCollapsed: true,
             contentPadding: EdgeInsets.all(12),

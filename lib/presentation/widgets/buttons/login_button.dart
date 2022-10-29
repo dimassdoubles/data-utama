@@ -1,3 +1,6 @@
+import 'package:data_utama/injetion_container.dart';
+import 'package:data_utama/presentation/blocs/auth/authentication_bloc.dart';
+import 'package:data_utama/presentation/blocs/auth/authentication_event.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/styles/colors.dart';
@@ -18,8 +21,13 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        print(_usernameController.text);
-        print(_passwordController.text);
+        final authBloc = getIt<AuthenticationBloc>();
+        authBloc.add(
+          LoggedIn(
+            _usernameController.text,
+            _passwordController.text,
+          ),
+        );
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: darkBlue,

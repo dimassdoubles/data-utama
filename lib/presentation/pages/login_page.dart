@@ -1,7 +1,11 @@
+import 'package:data_utama/injetion_container.dart';
+import 'package:data_utama/presentation/blocs/auth/authentication_bloc.dart';
+import 'package:data_utama/presentation/blocs/auth/authentication_state.dart';
 import 'package:data_utama/shared/routes.dart';
 import 'package:data_utama/shared/styles/colors.dart';
 import 'package:data_utama/shared/styles/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/buttons/forgot_pass_button.dart';
 import '../widgets/buttons/login_button.dart';
@@ -19,6 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  final AuthenticationBloc _authBloc = getIt<AuthenticationBloc>();
+
   @override
   void dispose() {
     _usernameController.dispose();
@@ -30,31 +36,51 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            children: [
-              const Header(),
-              const SizedBox(
-                height: 64,
+      body: BlocListener(
+        bloc: _authBloc,
+        listener: (context, state) {
+          if (state is Authenticated) {
+            Navigator.pushReplacementNamed(context, homePage);
+          }
+          if (state is LoginFail) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: red,
+                duration: const Duration(milliseconds: 3000),
+                content: Text(
+                  state.message,
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
-              InputSection(
-                usernameController: _usernameController,
-                passwordController: _passwordController,
-              ),
-              const SizedBox(
-                height: 64,
-              ),
-              LoginButton(
-                usernameController: _usernameController,
-                passwordController: _passwordController,
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              const MoveToRegisterPage(),
-            ],
+            );
+          }
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Column(
+              children: [
+                const Header(),
+                const SizedBox(
+                  height: 64,
+                ),
+                InputSection(
+                  usernameController: _usernameController,
+                  passwordController: _passwordController,
+                ),
+                const SizedBox(
+                  height: 64,
+                ),
+                LoginButton(
+                  usernameController: _usernameController,
+                  passwordController: _passwordController,
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                const MoveToRegisterPage(),
+              ],
+            ),
           ),
         ),
       ),

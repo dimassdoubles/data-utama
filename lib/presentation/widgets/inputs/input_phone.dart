@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../shared/styles/text_styles.dart';
 
-class InputTelp extends StatelessWidget {
+class Inputphone extends StatelessWidget {
   final TextEditingController _controller;
 
-  const InputTelp({
+  const Inputphone({
     Key? key,
     required TextEditingController controller,
   })  : _controller = controller,
@@ -35,7 +35,7 @@ class InputTelp extends StatelessWidget {
         ),
         TextFormField(
           controller: _controller,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             isCollapsed: true,
             contentPadding: EdgeInsets.all(12),

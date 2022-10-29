@@ -34,7 +34,7 @@ class InputName extends StatelessWidget {
         ),
         TextFormField(
           controller: _controller,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             isCollapsed: true,
             contentPadding: EdgeInsets.all(12),

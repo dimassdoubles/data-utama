@@ -4,7 +4,7 @@ import '../widgets/inputs/input_email.dart';
 import '../widgets/inputs/input_name.dart';
 import '../widgets/inputs/input_pass_confirmation.dart';
 import '../widgets/inputs/input_password.dart';
-import '../widgets/inputs/input_telp.dart';
+import '../widgets/inputs/input_phone.dart';
 import '../widgets/buttons/register_button.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -17,7 +17,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _telpController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _passConfirmController = TextEditingController();
 
@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
-    _telpController.dispose();
+    _phoneController.dispose();
     _passController.dispose();
     _passConfirmController.dispose();
 
@@ -75,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 16,
               ),
-              InputTelp(controller: _telpController),
+              Inputphone(controller: _phoneController),
               const SizedBox(
                 height: 16,
               ),
@@ -90,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
               RegisterButton(
                 nameController: _nameController,
                 emailController: _emailController,
-                telpController: _telpController,
+                phoneController: _phoneController,
                 passController: _passController,
                 passConfirmController: _passConfirmController,
               ),
@@ -104,6 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+
 class InputGender extends StatelessWidget {
   const InputGender({
     Key? key,
