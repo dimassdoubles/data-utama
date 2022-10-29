@@ -93,7 +93,9 @@ class LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, homePage);
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: darkBlue,
         elevation: 0,

@@ -1,3 +1,4 @@
+import 'package:data_utama/shared/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/styles/colors.dart';
@@ -81,7 +82,9 @@ class RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, homePage);
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: darkBlue,
         elevation: 0,
