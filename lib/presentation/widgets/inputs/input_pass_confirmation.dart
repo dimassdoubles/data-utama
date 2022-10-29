@@ -42,7 +42,7 @@ class _InputPassConfirmationState extends State<InputPassConfirmation> {
         ),
         TextFormField(
           controller: widget._controller,
-          obscureText: true,
+          obscureText: _isObscure,
           decoration: InputDecoration(
             border: const OutlineInputBorder(),
             isCollapsed: true,
