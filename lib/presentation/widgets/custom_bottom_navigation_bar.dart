@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:data_utama/injetion_container.dart';
 import 'package:data_utama/presentation/cubits/page_cubit.dart';
+import 'package:data_utama/shared/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,6 +24,10 @@ class CustomBottomNavBar extends StatelessWidget {
         selectedItemColor: lightBlue,
         onTap: (value) => _pageCubit.setPage(value),
         iconSize: 21,
+        unselectedLabelStyle: textStyle2.copyWith(
+          color: Colors.black,
+          fontWeight: semiBold,
+        ),
         items: [
           BottomNavigationBarItem(
             icon: Image.asset(
