@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../shared/styles/text_styles.dart';
 
-class InputPassConfirmation extends StatelessWidget {
+class InputPassConfirmation extends StatefulWidget {
   final TextEditingController _controller;
 
   const InputPassConfirmation({
@@ -10,6 +10,13 @@ class InputPassConfirmation extends StatelessWidget {
     required TextEditingController controller,
   })  : _controller = controller,
         super(key: key);
+
+  @override
+  State<InputPassConfirmation> createState() => _InputPassConfirmationState();
+}
+
+class _InputPassConfirmationState extends State<InputPassConfirmation> {
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +41,27 @@ class InputPassConfirmation extends StatelessWidget {
           height: 4,
         ),
         TextFormField(
-          controller: _controller,
+          controller: widget._controller,
           obscureText: true,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
             isCollapsed: true,
-            contentPadding: EdgeInsets.all(12),
-            suffixIcon: Icon(
-              Icons.remove_red_eye,
-              color: Colors.black,
+            contentPadding: const EdgeInsets.all(12),
+            suffixIcon: GestureDetector(
+              onTapDown: (details) {
+                setState(() {
+                  _isObscure = false;
+                });
+              },
+              onTapUp: (details) {
+                setState(() {
+                  _isObscure = true;
+                });
+              },
+              child: const Icon(
+                Icons.remove_red_eye,
+                color: Colors.black,
+              ),
             ),
           ),
         ),

@@ -53,16 +53,13 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             children: [
-              const SizedBox(
-                height: 32,
-              ),
               const InputGender(),
               const SizedBox(
                 height: 16,
@@ -85,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               InputPassConfirmation(controller: _passConfirmController),
               const SizedBox(
-                height: 32,
+                height: 64,
               ),
               RegisterButton(
                 nameController: _nameController,
